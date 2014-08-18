@@ -105,8 +105,9 @@ public class TestCacheSingleton implements ITest {
 	public void run() throws InterruptedException {
 		 
         int nwt = 0; //number of write threads
-        int nrt = 9; //number of read threads
-		int cycles = 100000;
+        int nrt = 2; //number of read threads
+		int cycles = 1024*512; // 2048
+		int cache_size = 1024 * 1024 * 1024 * 1;
  		StringBuffer sb = new StringBuffer();
         for(int i = 0; i<1024; i++) {
         	sb.append("+");
@@ -114,7 +115,7 @@ public class TestCacheSingleton implements ITest {
         String strTest = sb.toString();
         List<Thread> listT = new LinkedList<Thread>();
         
-        CacheSingleton cacheService = CacheSingleton.getInstance(1024*1024*1024*1);
+        CacheSingleton cacheService = CacheSingleton.getInstance(cache_size);
         
 		System.out.println("initing cacheService...");
         runWrite(cacheService, strTest, cycles);
@@ -138,13 +139,10 @@ public class TestCacheSingleton implements ITest {
         	listT.add(tt);
         	tt.start();
         }
-    
-        Thread.sleep(100000);
-        /*
-        for(Thread ttt:listT) {
-        	ttt.wait();
+        
+        for(Thread tttt:listT) {
+        	tttt.join();
         }
-        */
         
         System.out.println("ALL DONE");
 	} 
