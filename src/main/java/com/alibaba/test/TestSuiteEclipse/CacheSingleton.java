@@ -9,7 +9,7 @@ import org.apache.directmemory.cache.CacheService;
 public class CacheSingleton {
 	private static CacheSingleton theInstance = null;
 	private static CacheService<String, String> cacheService = null;
-	final private static int steps = 16;
+	final private static int steps = 32;
 	private ReadWriteLock rwLock;
 	
 	private CacheSingleton(CacheService cacheService) {
@@ -44,10 +44,10 @@ public class CacheSingleton {
 	}
 	
 	
-	public synchronized static CacheSingleton getInstance(int size) {
+	public synchronized static CacheSingleton getInstance(long size) {
 		CacheService cacheService  = new DirectMemory<String, String> ()
 				.setNumberOfBuffers(steps)
-				.setSize(size/16)
+				.setSize((int)(size/steps))
 				.setInitialCapacity(100000)
 				.setConcurrencyLevel(4)
 				.newCacheService();	

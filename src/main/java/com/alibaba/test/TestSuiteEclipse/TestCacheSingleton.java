@@ -101,13 +101,11 @@ public class TestCacheSingleton implements ITest {
 		return sb.toString();
 	}
 	
-	
-	public void run() throws InterruptedException {
-		 
+	 public void run() throws InterruptedException {
         int nwt = 0; //number of write threads
-        int nrt = 2; //number of read threads
-		int cycles = 1024*512; // 2048
-		int cache_size = 1024 * 1024 * 1024 * 1;
+        int nrt = 4; //number of read threads
+		int cycles = 1024*1024*2; // 2048
+		long cache_size = 1024 * 1024 * 1024 * 3L;
  		StringBuffer sb = new StringBuffer();
         for(int i = 0; i<1024; i++) {
         	sb.append("+");
