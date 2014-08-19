@@ -28,7 +28,7 @@ public class GuavaCacheSingleton implements ICache<String, Object>{
 
 	public Object get(final String key) {
 		Object ret;
-		rwLock.readLock().lock();
+		//rwLock.readLock().lock();
 		try{
 			ret = this.cacheService.get(key, new Callable<String>()
             {
@@ -40,50 +40,53 @@ public class GuavaCacheSingleton implements ICache<String, Object>{
             e.printStackTrace();
 			return null;
 		} finally {
-			rwLock.readLock().unlock();
+			//rwLock.readLock().unlock();
 		}
 		return ret;
 	}
 
     public void free(String key) {
-        rwLock.writeLock().lock();
+        //rwLock.writeLock().lock();
         try{
             this.cacheService.invalidate(key);
         } catch(Exception e) {
             e.printStackTrace();
         }finally {
-            rwLock.writeLock().unlock();
+            //rwLock.writeLock().unlock();
         }
     }
 
     public void clear() {
-        rwLock.writeLock().lock();
+        //rwLock.writeLock().lock();
         try {
             this.cacheService.invalidateAll();
         } catch(Exception e) {
         } finally {
-            rwLock.writeLock().unlock();
+            //rwLock.writeLock().unlock();
         }
     }
 	public boolean set(String key, Object obj) {
         boolean ret = true;
-		rwLock.writeLock().lock();
+		//rwLock.writeLock().lock();
 		try{
             this.cacheService.put(key, obj);
 		} catch(Exception e) {
 			ret = false;
 		} finally {
-			rwLock.writeLock().unlock();
+			//rwLock.writeLock().unlock();
 		}
         return ret;
 	}
 
 
 	public synchronized static GuavaCacheSingleton getInstance(long size) {
-        Cache<String, Object> cacheService = CacheBuilder.newBuilder()
-                .maximumSize(20000000L)
-                .build();
-		return new GuavaCacheSingleton(cacheService);
+        if (theInstance == null) {
+            Cache<String, Object> cacheService = CacheBuilder.newBuilder()
+                    .maximumSize(2L * 1024L * 1024L)
+                    .build();
+            theInstance = new GuavaCacheSingleton(cacheService);
+        }
+        return theInstance;
 	}
 
     public static Object createNewObject(String key) {

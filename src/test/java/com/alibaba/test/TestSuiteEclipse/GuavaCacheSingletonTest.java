@@ -25,7 +25,6 @@ public class GuavaCacheSingletonTest extends TestCase{
         a.set("key2", "value");
         a.set("key3", "value");
 
-        System.out.println(a.get("key1"));
         a.free("key1");
         assertTrue(!a.get("key1").equals("value"));
         assertTrue(a.get("key2").equals("value"));

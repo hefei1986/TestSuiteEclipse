@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class TestCacheSingleton implements ITest {
 
+    long baseCycles = 100;
 	long cycles = 10000;
 
 	class MyReadThread implements Runnable {
@@ -20,20 +21,23 @@ public class TestCacheSingleton implements ITest {
 		}
 		public void run() {
 			long start = System.currentTimeMillis();
-			int i;
-            for(i = 0; i < this.cycles; i++) {
-            	String ret = (String) cacheService.get("Key_" + (i + 1000000));
-            	if(ret == null) {
-                	System.out.println("thread #" + this.id + ", " + "read null at " + i);
-                	continue;
-            	}
-                if(ret.isEmpty()) {
-                	System.out.println("thread #" + this.id + ", " + "read failed at " + i);
-                	continue;
+			int i = 0;
+            int j;
+            for(j = 0; j < baseCycles ; j++) {
+                for(i = 0; i < this.cycles; i++) {
+                    String ret = (String) cacheService.get("Key_" + (i + 1000000));
+                    if (ret == null) {
+                        //TODO
+                        continue;
+                    }
+                    if (ret.isEmpty()) {
+                        //TODO
+                        continue;
+                    }
                 }
             }
             long duration = System.currentTimeMillis() - start;
-            System.out.println("thread #" + this.id + ", " +"read " + i + " costs " + duration + "ms," + " average " + (float)i/duration);
+            System.out.println("thread #" + this.id + ", " +"read " + i+ ":" + j + " costs " + duration + "ms," + " average " + (float)i/duration);
 		}
 	}
 	
@@ -54,16 +58,19 @@ public class TestCacheSingleton implements ITest {
 		
 		public void run() {
 			long start = System.currentTimeMillis();
-			int i;
-            for(i = 0; i < this.cycles; i++) {
-            	Object ret = cacheService.set("Key_" + (i + 1000000), mockDAO.getData(i));
-                if(ret == null) {
-                	System.out.println("thread #" + this.id + ", " +"write failed at " + i);
-                    break;
+			int i = 0;
+            int j;
+            for(j = 0; j < baseCycles ; j++) {
+                for (i = 0; i < this.cycles; i++) {
+                    Object ret = cacheService.set("Key_" + (i + 1000000), mockDAO.getData(i));
+                    if (ret == null) {
+                        System.out.println("thread #" + this.id + ", " + "write failed at " + i);
+                        break;
+                    }
                 }
             }
             long duration = System.currentTimeMillis() - start;
-            System.out.println("thread #" + this.id + ", " +"write " + i + " costs " + duration + "ms," + " average " + (float)i/duration);
+            System.out.println("thread #" + this.id + ", " +"write " + i  + ":" + j + " costs " + duration + "ms," + " average " + (float)i/duration);
 		}
 	}
 
@@ -95,9 +102,9 @@ public class TestCacheSingleton implements ITest {
 	}
 	
 	 public void run() throws InterruptedException {
-        int nwt = 1; //number of write threads
+        int nwt = 2; //number of write threads
         int nrt = 4; //number of read threads
-		int cycles = 1024*64; // 2048
+		int cycles = 1024 * 2; // 2048
 		long cache_size = 1024 * 1024 * 1024 * 3L;
  		StringBuffer sb = new StringBuffer();
         for(int i = 0; i<1024; i++) {

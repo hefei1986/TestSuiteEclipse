@@ -3,10 +3,7 @@ package com.alibaba.test.TestSuiteEclipse;
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
-		//run();
-
-        //ICache a = GuavaCacheSingleton.getInstance(1);
-
+		run();
 	}
 
 	private static ITest getTestImpl() {

@@ -7,6 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Created by hefei.hfei on 2014/8/19.
  */
+
 public class CacheSingletonTest extends TestCase{
 
     public CacheSingletonTest(String name) {
@@ -23,7 +24,6 @@ public class CacheSingletonTest extends TestCase{
         a.set("key2", "value");
         a.set("key3", "value");
 
-        System.out.println(a.get("key1"));
         a.free("key1");
         assertNull(a.get("key1"));
         assertTrue(a.get("key2").equals("value"));
