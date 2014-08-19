@@ -3,12 +3,14 @@ package com.alibaba.test.TestSuiteEclipse;
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
-		run();
+		//run();
+
+        //ICache a = GuavaCacheSingleton.getInstance(1);
+
 	}
 
 	private static ITest getTestImpl() {
 		return new TestCacheSingleton();
-		//return new TestDirectMemory();
 	}
 	
 	private static void run() throws InterruptedException {

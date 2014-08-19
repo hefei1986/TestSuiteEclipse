@@ -2,13 +2,12 @@ package com.alibaba.test.TestSuiteEclipse;
 
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import org.apache.directmemory.DirectMemory;
 import org.apache.directmemory.cache.CacheService;
 
-public class CacheSingleton {
+public class CacheSingleton implements ICache<String, Object>{
 	private static CacheSingleton theInstance = null;
-	private static CacheService<String, String> cacheService = null;
+	private static CacheService<String, Object> cacheService = null;
 	final private static int steps = 32;
 	private ReadWriteLock rwLock;
 	
@@ -29,8 +28,28 @@ public class CacheSingleton {
 		}
 		return ret;
 	}
-	
-	public boolean set(String key, String obj) {
+
+    public void free(String key) {
+        rwLock.writeLock().lock();
+        try{
+            this.cacheService.free(key);
+        } catch(Exception e) {
+        }finally {
+            rwLock.writeLock().unlock();
+        }
+    }
+
+    public void clear() {
+        rwLock.writeLock().lock();
+        try {
+            this.cacheService.clear();
+        } catch(Exception e) {
+        } finally {
+            rwLock.writeLock().unlock();
+        }
+    }
+
+    public boolean set(String key, Object obj) {
 		Object ret;
 		rwLock.writeLock().lock();
 		try{
@@ -43,17 +62,13 @@ public class CacheSingleton {
 		return ret == null ? false : true;
 	}
 	
-	
 	public synchronized static CacheSingleton getInstance(long size) {
-		CacheService cacheService  = new DirectMemory<String, String> ()
+		CacheService cacheService  = new DirectMemory<String, Object> ()
 				.setNumberOfBuffers(steps)
 				.setSize((int)(size/steps))
-				.setInitialCapacity(100000)
+				.setInitialCapacity(20000000)
 				.setConcurrencyLevel(4)
 				.newCacheService();	
 		return new CacheSingleton(cacheService);
 	}
-	
-	
-
 }
