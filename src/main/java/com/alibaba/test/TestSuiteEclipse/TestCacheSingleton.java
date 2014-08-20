@@ -2,6 +2,7 @@ package com.alibaba.test.TestSuiteEclipse;
 
 import java.util.LinkedList;
 import java.util.List;
+import sun.management.ManagementFactory;
 
 public class TestCacheSingleton implements ITest {
 
@@ -16,7 +17,7 @@ public class TestCacheSingleton implements ITest {
         mockDAO = new MockDAO();
         range = 1024 * 128;
         cycles =1024 * 1024 * 128;
-        nwt = 1;
+        nwt = 0;
         nrt = 5;
         cacheSize = 1024L * 1024L * 1024L * 2L;
     }
@@ -36,10 +37,11 @@ public class TestCacheSingleton implements ITest {
 	}
 	
 	 public void run() throws InterruptedException {
+         System.out.println(ManagementFactory.getRuntimeMXBean().getName());
         List<Thread> listReadT = new LinkedList<Thread>();
          List<Thread> listClearT = new LinkedList<Thread>();
-        //CacheSingleton cacheService = CacheSingleton.getInstance(this.cache_size);
-        GuavaCacheSingleton cacheService = GuavaCacheSingleton.getInstance(this.cacheSize);
+        CacheSingleton cacheService = CacheSingleton.getInstance(1024L * 1024L * 1024L *2);
+        //GuavaCacheSingleton cacheService = GuavaCacheSingleton.getInstance(this.cacheSize);
 
 		System.out.println("initing cacheService...");
         runWrite(cacheService, this.range);
