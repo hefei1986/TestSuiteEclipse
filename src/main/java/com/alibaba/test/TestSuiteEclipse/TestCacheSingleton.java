@@ -16,7 +16,7 @@ public class TestCacheSingleton implements ITest {
     public TestCacheSingleton() {
         mockDAO = new MockDAO();
         range = 1024 * 128;
-        cycles =1024 * 1024 * 2;
+        cycles =1024 * 1024 * 1600;
         nwt = 1;
         nrt = 5;
         cacheSize = 1024L * 1024L * 1024L * 2L;
