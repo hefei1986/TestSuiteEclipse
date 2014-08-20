@@ -33,5 +33,6 @@ public class CacheSingletonTest extends TestCase{
 
         a.set("key1", "value");
         assertTrue(a.get("key1").equals("value"));
+        a.clear();
     }
 }

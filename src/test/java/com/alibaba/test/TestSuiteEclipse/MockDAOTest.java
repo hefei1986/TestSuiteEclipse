@@ -20,7 +20,6 @@ public class MockDAOTest extends TestCase {
     public void testCase1() {
         MockDAO mockDAO = new MockDAO();
         String str = mockDAO.getData(123);
-        System.out.println(str);
         assertNotNull(str);
     }
 
