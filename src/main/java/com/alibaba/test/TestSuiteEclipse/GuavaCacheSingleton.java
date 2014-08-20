@@ -33,6 +33,7 @@ public class GuavaCacheSingleton implements ICache<String, Object>{
 			ret = this.cacheService.get(key, new Callable<String>()
             {
                 public String call() {
+                    System.out.println("qwe");
                     return mockDAO.getData(1);
                 }
             });
@@ -78,6 +79,9 @@ public class GuavaCacheSingleton implements ICache<String, Object>{
         return ret;
 	}
 
+    public String getStatics() {
+        return this.cacheService.stats().toString();
+    }
 
 	public synchronized static GuavaCacheSingleton getInstance(long size) {
         if (theInstance == null) {

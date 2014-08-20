@@ -61,6 +61,10 @@ public class CacheSingleton implements ICache<String, Object>{
 		}
 		return ret == null ? false : true;
 	}
+
+    public String getStatics() {
+        return "not statics for DirectMemory";
+    }
 	
 	public synchronized static CacheSingleton getInstance(long size) {
         if(theInstance == null) {

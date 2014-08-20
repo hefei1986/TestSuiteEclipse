@@ -8,4 +8,5 @@ public interface ICache<K,V> {
     public void free(K key);
     public void clear();
     public boolean set(K key, V obj);
+    public String getStatics();
 }
