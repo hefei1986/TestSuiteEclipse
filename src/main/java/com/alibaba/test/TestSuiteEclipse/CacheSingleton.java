@@ -1,5 +1,6 @@
 package com.alibaba.test.TestSuiteEclipse;
 
+import java.io.Serializable;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.apache.directmemory.DirectMemory;
@@ -49,7 +50,7 @@ public class CacheSingleton implements ICache<String, Object>{
         }
     }
 
-    public boolean set(String key, Object obj) {
+    public boolean set(String key, Serializable obj) {
 		Object ret;
 		//rwLock.writeLock().lock();
 		try{
@@ -65,7 +66,11 @@ public class CacheSingleton implements ICache<String, Object>{
     public String getStatics() {
         return "not statics for DirectMemory";
     }
-	
+
+    public boolean setTair(String key, Serializable obj)
+    {
+        return true;
+    }
 	public synchronized static CacheSingleton getInstance(long size) {
         if(theInstance == null) {
             CacheService cacheService = new DirectMemory<String, Object>()

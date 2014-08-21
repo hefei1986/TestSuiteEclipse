@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="ctrTairManager" class="com.taobao.aladdin.engine.factory.RemoteFactoryBean" depends-on="enviroment">
+        <property name="proxyHost" value="${proxyHost}" />
+        <property name="proxyBean">
+            <bean class="com.taobao.tair.extend.impl.DefaultExtendTairManager"
+                  init-method="init">
+                <property name="dataServer">
+                    <value>localhost:5191</value>
+                </property>
+                <property name="timeout">
+                    <value>500</value>
+                </property>
+            </bean>
+        </property>
+        <property name="proxyInterface" value="com.taobao.tair.extend.impl.DefaultExtendTairManager"/>
+    </bean>
+ </beans>

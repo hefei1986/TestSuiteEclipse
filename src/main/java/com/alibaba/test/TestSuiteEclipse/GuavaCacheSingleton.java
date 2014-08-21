@@ -4,6 +4,7 @@ package com.alibaba.test.TestSuiteEclipse;
  * Created by hefei.hfei on 2014/8/19.
  */
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -33,7 +34,6 @@ public class GuavaCacheSingleton implements ICache<String, Object>{
 			ret = this.cacheService.get(key, new Callable<String>()
             {
                 public String call() {
-                    System.out.println("qwe");
                     return mockDAO.getData(1);
                 }
             });
@@ -66,7 +66,7 @@ public class GuavaCacheSingleton implements ICache<String, Object>{
             //rwLock.writeLock().unlock();
         }
     }
-	public boolean set(String key, Object obj) {
+	public boolean set(String key, Serializable obj) {
         boolean ret = true;
 		//rwLock.writeLock().lock();
 		try{
@@ -78,6 +78,11 @@ public class GuavaCacheSingleton implements ICache<String, Object>{
 		}
         return ret;
 	}
+
+    public boolean setTair(String key, Serializable obj)
+    {
+        return true;
+    }
 
     public String getStatics() {
         return this.cacheService.stats().toString();

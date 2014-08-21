@@ -15,8 +15,8 @@ public class TestCacheSingleton implements ITest {
 
     public TestCacheSingleton() {
         mockDAO = new MockDAO();
-        range = 1024 * 128;
-        cycles =1024 * 1024 * 1600;
+        range = 1024 * 1024;
+        cycles =1024 * 1024 * 16;
         nwt = 1;
         nrt = 5;
         cacheSize = 1024L * 1024L * 1024L * 2L;
@@ -41,7 +41,8 @@ public class TestCacheSingleton implements ITest {
         List<Thread> listReadT = new LinkedList<Thread>();
          List<Thread> listClearT = new LinkedList<Thread>();
         //CacheSingleton cacheService = CacheSingleton.getInstance(1024L * 1024L * 1024L *2);
-        GuavaCacheSingleton cacheService = GuavaCacheSingleton.getInstance(this.cacheSize);
+        //GuavaCacheSingleton cacheService = GuavaCacheSingleton.getInstance(this.cacheSize);
+         LocalTairCacheSingleton cacheService = LocalTairCacheSingleton.getInstance(this.cacheSize);
 
 		System.out.println("initing cacheService...");
         runWrite(cacheService, this.range);
