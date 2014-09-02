@@ -1,6 +1,7 @@
 package com.alibaba.test.TestSuiteEclipse;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by hefei.hfei on 2014/8/19.

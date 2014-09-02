@@ -9,8 +9,8 @@ import java.util.TreeMap;
  * Created by hefei.hfei on 2014/8/19.
  */
 public class MockDAO {
-    final static int baseLength = 1024;
-    final static int randLength = 1024;
+    final static int baseLength = 200;
+    final static int randLength = 1;
     static Map<Integer, String> theMap = new HashMap<Integer, String>();
 
     public String getData(int key) {

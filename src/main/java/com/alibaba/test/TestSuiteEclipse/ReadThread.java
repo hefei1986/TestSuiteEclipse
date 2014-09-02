@@ -22,7 +22,8 @@ class ReadThread implements Runnable {
 			long start = System.currentTimeMillis();
 			int i;
             for(i = 0; i < cycles ; i++) {
-                int tIndex = RandomIDDAO.getRandomId(range);
+                //int tIndex = RandomIDDAO.getRandomId(range);
+                int tIndex = RandomIDDAO.getTenNinetyRandomId(range);
                 String tKey = "Key_" + tIndex;
                 String ret = (String) cacheService.get(tKey);
                 if(ret == null) {

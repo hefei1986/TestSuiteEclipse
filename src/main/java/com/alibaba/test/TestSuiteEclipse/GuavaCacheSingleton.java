@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 public class GuavaCacheSingleton implements ICache<String, Object>{
     private static Cache<String, Object> cacheService = null;
